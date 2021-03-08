@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 
 int package_installed, package_removed, package_upgraded, cont;
-int alpm_scripttlet, alpm, pacman, tempn, tempendn;
+int alpm_scriptlet, alpm, pacman;
 char* date = "-";
 char* name = "-";
 char* status = "-";
@@ -77,16 +77,19 @@ void readLine(char *line){
 
     endn++;
     startn = endn;
-    tempn = endn;
 
-    if (line[tempn] == '[' && line[tempn + 1] == 'P' && line[tempn + 2] == 'A' && line[tempn + 3] == 'C'){
-            pacman++;
+    char* pacmann = strstr(line, "[PACMAN]");
+    char* alpmn = strstr(line, "[ALPM]");
+    char* alpmscriptletn = strstr(line, "[ALPM-SCRIPTLET]");
+
+    if(pacmann != NULL){
+        pacman++;
     }
-    else if(line[tempn] == '[' && line[tempn + 1] == 'A' && line[tempn + 2] == 'L' && line[tempn + 3] == 'P' && line[tempn + 4] == 'M' && line[tempn + 5] == '-'){
-            alpm_scripttlet++;
+    else if(alpmn != NULL){
+        alpm++;
     }
-    else if(line[tempn] == '[' && line[tempn + 1] == 'A' && line[tempn + 2] == 'L' && line[tempn + 3] == 'P' && line[tempn + 4] == 'M'){
-            alpm++;
+    else if(alpmscriptletn != NULL){
+        alpm_scriptlet++;
     }
     
     if((startn < string(line))){
@@ -155,7 +158,7 @@ void writeReport(char *report){
         }
     }
     fprintf(fp, sentence, string(sentence));
-    sprintf(sentence, "- [ALPM-SCRIPTTLET] type count : \t%d\n", alpm_scripttlet);
+    sprintf(sentence, "- [ALPM-SCRIPTTLET] type count : \t%d\n", alpm_scriptlet);
     fprintf(fp, sentence, string(sentence));
     sprintf(sentence, "- [ALPM] count : \t%d\n", alpm);
     fprintf(fp, sentence, string(sentence));
