@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#define REPORT_FILE "packages_report.txt"
+
 int package_installed, package_removed, package_upgraded, cont;
 int alpm_scriptlet, alpm, pacman;
 char* date = "-";
